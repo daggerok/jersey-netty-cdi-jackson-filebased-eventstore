@@ -2,4 +2,5 @@
 <!-- exclude UPM_UNCALLED_PRIVATE_METHOD in order to use private on(@Observes ... event) methods -->
 <FindBugsFilter>
   <Bug code="UPM"/>
+  <Bug code="UrF"/>
 </FindBugsFilter>

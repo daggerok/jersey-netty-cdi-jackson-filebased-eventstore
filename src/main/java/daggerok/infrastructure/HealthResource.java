@@ -34,7 +34,6 @@ public class HealthResource {
 
     @GET
     @Path("{path:(.*)?}")
-    // @Path("{path: ^\\.?+$}")
     public JsonObject getAny(@PathParam("path") String path) {
         log.info("unexpected GET");
         return info(path);

@@ -75,7 +75,7 @@
       <version>${jersey.version}</version>
     </dependency>
     <!--
-      1. Serialization / Deserialization of abstract types ( such as DomainEvent)
+      1. Serialization / Deserialization of abstract types (such as DomainEvent)
          by using Jackson type feature
       2. REST API: Input List of DomainEvents as Request Body
     -->
@@ -88,6 +88,7 @@
       <groupId>org.glassfish.jersey.media</groupId>
       <artifactId>jersey-media-json-processing</artifactId>
     </dependency>
+    <!-- Jackson ObjectMapper -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
