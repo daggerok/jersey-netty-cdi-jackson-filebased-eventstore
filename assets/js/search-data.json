@@ -1,0 +1,31 @@
+{
+  "0": {
+    "id": "0",
+    "title": "",
+    "content": "404 Page not found :( The requested page could not be found.",
+    "url": "/404.html",
+    "relUrl": "/404.html"
+  },
+  "1": {
+    "id": "1",
+    "title": "About",
+    "content": "This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at jekyllrb.com You can find the source code for Minima at GitHub: jekyll / minima You can find the source code for Jekyll at GitHub: jekyll / jekyll",
+    "url": "/about/",
+    "relUrl": "/about/"
+  },
+  "2": {
+    "id": "2",
+    "title": "",
+    "content": "Jersey Netty CDI Jackson File EventStore Building File based event-store with Jackson JSON Serialisation / Deserialization, Jersey REST API uses Netty runtime and Weld CDI clone repo git clone --depth=1 https://github.com/daggerok/jersey-netty-cdi-jackson-file-eventstore.git app cd app/ run fat jar ./mvnw package ; java -jar target/*-all.jar test event-stpre echo &#39;[ { &quot;type&quot;:&quot;CounterCreated&quot;, &quot;aggregateId&quot;: &quot;00000000-0000-0000-0000-000000000000&quot;, &quot;counterName&quot;: &quot;hello 1&quot; }, { &quot;type&quot;:&quot;CounterIncremented&quot;, &quot;aggregateId&quot;: &quot;00000000-0000-0000-0000-000000000000&quot;, &quot;by&quot;: &quot;max&quot;, &quot;withValue&quot;: 2 }, { &quot;type&quot;:&quot;CounterIncremented&quot;, &quot;aggregateId&quot;: &quot;00000000-0000-0000-0000-000000000000&quot;, &quot;by&quot;: &quot;max&quot;, &quot;withValue&quot;: 3 }, { &quot;type&quot;:&quot;CounterIncremented&quot;, &quot;aggregateId&quot;: &quot;00000000-0000-0000-0000-000000000000&quot;, &quot;by&quot;: &quot;max&quot; }, { &quot;type&quot;:&quot;CounterSuspended&quot;, &quot;aggregateId&quot;: &quot;00000000-0000-0000-0000-000000000000&quot;, &quot;reason&quot;: &quot;because!&quot; } ]&#39; | http post :8080/events/collection http :8080/events/00000000-0000-0000-0000-000000000000 Accept:application/json http :8080/events/00000000-0000-0000-0000-000000000001/collection Accept:application/json NOTE: This project has been based on GitHub: daggerok/main-starter (branch: maven-java) links: Overriding Jackson ObjectMapper Provider in Jersey spotbugs plugin quick project docs jekyll guide cd docs bundle bundle exec just-the-docs rake search:init bundle exec jekyll serve bundle exec jekyll build mv -v _site",
+    "url": "/",
+    "relUrl": "/"
+  },
+  "3": {
+    "id": "3",
+    "title": "Welcome to Jekyll!",
+    "content": "You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated. To add new posts, simply add a file in the _posts directory that follows the convention YYYY-MM-DD-name-of-post.ext and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works. Jekyll also offers powerful support for code snippets: def print_hi(name) puts &quot;Hi, #{name}&quot; end print_hi(&#39;Tom&#39;) #=&gt; prints &#39;Hi, Tom&#39; to STDOUT. Check out the Jekyll docs for more info on how to get the most out of Jekyll. File all bugs/feature requests at Jekyll’s GitHub repo. If you have questions, you can ask them on Jekyll Talk.",
+    "url": "/docs/reference.html",
+    "relUrl": "/docs/reference.html"
+  }
+  
+}

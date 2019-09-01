@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- exclude UPM_UNCALLED_PRIVATE_METHOD in order to use private on(@Observes ... event) methods -->
-<FindBugsFilter>
-  <Bug code="UPM"/>
-</FindBugsFilter>
