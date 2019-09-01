@@ -1,0 +1,123 @@
+POST http://127.0.0.1:8080/events
+Content-Type: application/json
+Accept: application/json
+
+{
+  "aggregateId": "00000000-0000-0000-0000-000000000000",
+  "counterName": "hello",
+  "type": "CounterCreated"
+}
+
+###
+POST http://127.0.0.1:8080/events/one
+Content-Type: application/json
+Accept: application/json
+
+{
+  "aggregateId": "00000000-0000-0000-0000-000000000000"
+}
+
+###
+POST http://127.0.0.1:8080/events/two
+Content-Type: application/json
+Accept: application/json
+
+{
+  "aggregateId": "00000000-0000-0000-0000-000000000000"
+}
+
+###
+POST http://127.0.0.1:8080/events/two
+Content-Type: application/json
+Accept: application/json
+
+{
+  "aggregateId": "00000000-0000-0000-0000-000000000000",
+  "data1": "d a t a 1",
+  "data2": "d a t a 2"
+}
+
+###
+POST http://127.0.0.1:8080/events/three
+Content-Type: application/json
+Accept: application/json
+
+{
+  "aggregateId": "00000000-0000-0000-0000-000000000000"
+}
+
+###
+POST http://127.0.0.1:8080/events/three
+Content-Type: application/json
+Accept: application/json
+
+{
+  "aggregateId": "00000000-0000-0000-0000-000000000000",
+  "data1": "d-a-t-a-1",
+  "data2": "d-a-t-a-2"
+}
+
+###
+POST http://127.0.0.1:8080/events/three
+Content-Type: application/json
+Accept: application/json
+
+{
+  "aggregateId": "00000000-0000-0000-0000-000000000000",
+  "data1": "data 1",
+  "data2": "data 2",
+  "data3": "data 3"
+}
+
+###
+GET http://127.0.0.1:8080/events/00000000-0000-0000-0000-000000000000
+Accept: application/json
+
+###
+GET http://127.0.0.1:8080/events/00000000-0000-0000-0000-000000000000/collection
+Accept: application/json
+
+###
+POST http://127.0.0.1:8080/events/collection
+Content-Type: application/json
+Accept: application/json
+
+[
+  {
+    "type":"CounterCreated",
+    "aggregateId": "00000000-0000-0000-0000-000000000000",
+    "counterName": "hello 1"
+  },
+  {
+    "type":"CounterIncremented",
+    "aggregateId": "00000000-0000-0000-0000-000000000000",
+    "by": "max",
+    "withValue": 2
+  },
+  {
+    "type":"CounterIncremented",
+    "aggregateId": "00000000-0000-0000-0000-000000000000",
+    "by": "max",
+    "withValue": 3
+  },
+  {
+    "type":"CounterIncremented",
+    "aggregateId": "00000000-0000-0000-0000-000000000000",
+    "by": "max"
+  },
+  {
+    "type":"CounterSuspended",
+    "aggregateId": "00000000-0000-0000-0000-000000000000",
+    "reason": "because!"
+  }
+]
+
+###
+GET http://127.0.0.1:8080/events/00000000-0000-0000-0000-000000000000
+Accept: application/json
+
+###
+GET http://127.0.0.1:8080/events/00000000-0000-0000-0000-000000000000/collection
+Accept: application/json
+
+###
