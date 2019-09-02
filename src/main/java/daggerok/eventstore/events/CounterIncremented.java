@@ -40,4 +40,8 @@ public class CounterIncremented implements DomainEvent {
         this.withValue = Optional.ofNullable(withValue).orElse(1L);
         this.at = Optional.ofNullable(at).orElse(ZonedDateTime.now());
     }
+
+    public CounterIncremented(UUID aggregateId) {
+        this(aggregateId, null, null, null);
+    }
 }

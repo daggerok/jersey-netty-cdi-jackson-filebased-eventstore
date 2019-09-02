@@ -34,4 +34,8 @@ public class CounterCreated implements DomainEvent {
         this.counterName = Optional.ofNullable(counterName).orElse(String.format("counter-%d", System.nanoTime()));
         this.at = Optional.ofNullable(at).orElse(ZonedDateTime.now());
     }
+
+    public CounterCreated(UUID aggregateId) {
+        this(aggregateId, null, null);
+    }
 }

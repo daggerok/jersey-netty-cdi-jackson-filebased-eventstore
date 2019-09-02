@@ -40,4 +40,8 @@ public class CounterSuspended implements DomainEvent {
         this.reason = Optional.ofNullable(reason).orElse("no reason");
         this.at = Optional.ofNullable(at).orElse(ZonedDateTime.now());
     }
+
+    public CounterSuspended(UUID aggregateId) {
+        this(aggregateId, null, null, null);
+    }
 }

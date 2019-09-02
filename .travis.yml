@@ -86,6 +86,8 @@ jobs:
 
     - http :8080/events/00000000-0000-0000-0000-000000000001/collection Accept:application/json
     - http :8080/events/00000000-0000-0000-0000-000000000000 Accept:application/json
+    - http :8080/events
+    - http delete :8080/events
     - stop_any 80 8080
 
   - stage: test
@@ -133,6 +135,8 @@ jobs:
 
     - http :8080/events/00000000-0000-0000-0000-000000000001/collection Accept:application/json
     - http :8080/events/00000000-0000-0000-0000-000000000000 Accept:application/json
+    - http :8080/events
+    - http delete :8080/events
     - stop_any 80 8080
 
   - stage: test

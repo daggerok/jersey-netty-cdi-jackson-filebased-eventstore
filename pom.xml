@@ -25,12 +25,15 @@
     <jersey.version>2.29</jersey.version>
     <log4j.version>2.12.1</log4j.version>
     <lombok.version>1.18.8</lombok.version>
+    <assertj.version>3.13.2</assertj.version>
     <jandex.version>2.1.1.Final</jandex.version>
     <jackson.version>2.10.0.pr2</jackson.version>
+    <junit-jupiter.version>5.5.1</junit-jupiter.version>
     <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
     <jandex-maven-plugin.version>1.0.6</jandex-maven-plugin.version>
     <capsule-maven-plugin.version>1.5.1</capsule-maven-plugin.version>
     <spotbugs-maven-plugin.version>3.1.12.2</spotbugs-maven-plugin.version>
+    <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
   </properties>
 
   <dependencyManagement>
@@ -53,6 +56,13 @@
         <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-bom</artifactId>
         <version>${log4j.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>${junit-jupiter.version}</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>
@@ -121,12 +131,27 @@
       <artifactId>vavr</artifactId>
       <version>${vavr.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>${assertj.version}</version>
+    </dependency>
   </dependencies>
 
   <build>
     <defaultGoal>clean package</defaultGoal>
 
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin.version}</version>
+      </plugin>
       <!-- CDI index -->
       <plugin>
         <groupId>org.jboss.jandex</groupId>

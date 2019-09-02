@@ -24,11 +24,16 @@ import java.util.function.BiFunction;
 @ApplicationScoped
 public class EventStoreResource {
 
-    @Inject
-    EventStore eventStore;
+    private UriInfo uriInfo;
+    private EventStore eventStore;
 
-    @Context
-    UriInfo uriInfo;
+    EventStoreResource() {} // yuk...
+
+    @Inject
+    public EventStoreResource(@Context UriInfo uriInfo, EventStore eventStore) {
+        this.uriInfo = uriInfo;
+        this.eventStore = eventStore;
+    }
 
     private BiFunction<Object, String, Object> require = (variable, variableName) ->
             Optional.ofNullable(variable).orElseThrow(() -> new IllegalArgumentException(
@@ -103,11 +108,28 @@ public class EventStoreResource {
         require.apply(events, "events is require");
         for (DomainEvent domainEvent : events) {
             require.apply(domainEvent.getAggregateId(), "aggregateId is require");
-            eventStore.append(domainEvent);
         }
+        // eventStore.appendAll(events.toArray(new DomainEvent[0]));
         return Response.accepted()
                        .entity(Json.createObjectBuilder()
                                    .add("result", "all good")
+                                   .build())
+                       .build();
+    }
+
+    @GET
+    public Response findAll() {
+        return Response.accepted()
+                       .entity(eventStore.findAll())
+                       .build();
+    }
+
+    @DELETE
+    public Response cleanup() {
+        eventStore.cleanupAll();
+        return Response.accepted()
+                       .entity(Json.createObjectBuilder()
+                                   .add("result", "event store cleared")
                                    .build())
                        .build();
     }
