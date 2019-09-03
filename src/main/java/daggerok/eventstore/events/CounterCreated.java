@@ -35,7 +35,11 @@ public class CounterCreated implements DomainEvent {
         this.at = Optional.ofNullable(at).orElse(ZonedDateTime.now());
     }
 
+    public CounterCreated(UUID aggregateId, String counterName) {
+        this(aggregateId, counterName, null);
+    }
+
     public CounterCreated(UUID aggregateId) {
-        this(aggregateId, null, null);
+        this(aggregateId, null);
     }
 }

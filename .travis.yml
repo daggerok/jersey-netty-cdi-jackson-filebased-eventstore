@@ -88,6 +88,16 @@ jobs:
     - http :8080/events/00000000-0000-0000-0000-000000000000 Accept:application/json
     - http :8080/events
     - http delete :8080/events
+
+    - http :8080/counter
+    - http post :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterCreated counterName=hi
+    - http put :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterIncremented by=travis withValue=1
+    - http put :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterIncremented withValue=2
+    - http delete :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterSuspended reason="just because I can"
+    - http :8080/counter/00000000-0000-0000-0000-000000000000
+    - http :8080/counter
+    - http delete :8080/events
+    - http :8080/counter/00000000-0000-0000-0000-000000000000
     - stop_any 80 8080
 
   - stage: test
@@ -137,6 +147,16 @@ jobs:
     - http :8080/events/00000000-0000-0000-0000-000000000000 Accept:application/json
     - http :8080/events
     - http delete :8080/events
+
+    - http :8080/counter
+    - http post :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterCreated counterName=hi
+    - http put :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterIncremented by=travis withValue=1
+    - http put :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterIncremented withValue=2
+    - http delete :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterSuspended reason="just because I can"
+    - http :8080/counter/00000000-0000-0000-0000-000000000000
+    - http :8080/counter
+    - http delete :8080/events
+    - http :8080/counter/00000000-0000-0000-0000-000000000000
     - stop_any 80 8080
 
   - stage: test

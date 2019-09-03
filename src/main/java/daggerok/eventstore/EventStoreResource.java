@@ -39,27 +39,6 @@ public class EventStoreResource {
             Optional.ofNullable(variable).orElseThrow(() -> new IllegalArgumentException(
                     String.format("%s is required", variableName)));
 
-    @POST
-    public Response createCounter(CounterCreated counterCreated) {
-        eventStore.append(counterCreated);
-
-        URI url = uriInfo.getBaseUriBuilder()
-                         .path(EventStoreResource.class)
-                         .path(EventStoreResource.class, "getCounter")
-                         .build(counterCreated.getAggregateId());
-        String result = String.format("%s counter created: %s",
-                                      counterCreated.getCounterName(), url);
-        return Response.created(url)
-                       .entity(Json.createObjectBuilder()
-                                   .add("result", result)
-                                   .add("_links", Json.createArrayBuilder()
-                                                      .add(String.format("increment: PUT %s", url))
-                                                      .add(String.format("suspend: DELETE %s", url))
-                                                      .build())
-                                   .build())
-                       .build();
-    }
-
     @PUT
     @Path("{aggregateId}")
     public Response incrementCounter(CounterIncremented counterIncremented) {
@@ -108,6 +87,7 @@ public class EventStoreResource {
         require.apply(events, "events is require");
         for (DomainEvent domainEvent : events) {
             require.apply(domainEvent.getAggregateId(), "aggregateId is require");
+            eventStore.append(domainEvent);
         }
         // eventStore.appendAll(events.toArray(new DomainEvent[0]));
         return Response.accepted()
@@ -119,8 +99,7 @@ public class EventStoreResource {
 
     @GET
     public Response findAll() {
-        return Response.accepted()
-                       .entity(eventStore.findAll())
+        return Response.ok(eventStore.findAll())
                        .build();
     }
 

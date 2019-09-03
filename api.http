@@ -45,7 +45,7 @@ DELETE http://127.0.0.1:8080/events
 Accept: application/json
 
 ###
-POST http://127.0.0.1:8080/events
+POST http://127.0.0.1:8080/counter
 Content-Type: application/json
 Accept: application/json
 
@@ -56,7 +56,26 @@ Accept: application/json
 }
 
 ###
-GET http://127.0.0.1:8080/events
+PUT http://127.0.0.1:8080/counter
+Content-Type: application/json
+Accept: application/json
+
+{
+  "aggregateId": "00000000-0000-0000-0000-000000000000",
+  "by": "me",
+  "withValue": 3,
+  "type": "CounterIncremented"
+}
+
+###
+
+GET http://127.0.0.1:8080/counter/00000000-0000-0000-0000-000000000000
+Content-Type: application/json
+Accept: application/json
+
+###
+
+GET http://127.0.0.1:8080/counter
 Content-Type: application/json
 Accept: application/json
 
