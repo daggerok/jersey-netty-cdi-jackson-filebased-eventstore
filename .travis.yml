@@ -109,7 +109,7 @@ jobs:
     jdk: openjdk11
     name: test jdk11
     script:
-    - cd $TRAVIS_BUILD_DIR && ./mvnw -U >/dev/null
+    - cd $TRAVIS_BUILD_DIR && ./mvnw
     - java -jar $TRAVIS_BUILD_DIR/target/*-all.jar &
     - wait_for 8080
     - |
