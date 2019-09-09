@@ -3,4 +3,5 @@
 <FindBugsFilter>
   <Bug code="UPM"/>
   <Bug code="UrF"/>
+  <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE"/>
 </FindBugsFilter>
