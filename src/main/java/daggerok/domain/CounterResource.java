@@ -80,7 +80,7 @@ public class CounterResource {
     }
 
     @DELETE
-    public Response incrementCounter(CounterSuspended cmd) {
+    public Response suspendedCounter(CounterSuspended cmd) {
 
         Counter counter = Counter.rebuild(new Counter(), eventStore.read(cmd.getAggregateId()));
         counter.suspend(cmd.getBy(), cmd.getReason());

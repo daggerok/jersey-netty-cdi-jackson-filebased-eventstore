@@ -6,13 +6,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.daggerok</groupId>
   <artifactId>jersey-netty-cdi-jackson-file-eventstore</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>3.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
     <mainClass>daggerok.Main</mainClass>
 
-    <java.version>1.8</java.version>
+    <java.version>11</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
 
@@ -28,13 +28,15 @@
     <assertj.version>3.13.2</assertj.version>
     <jandex.version>2.1.1.Final</jandex.version>
     <jackson.version>2.10.0.pr2</jackson.version>
+    <arquillian.version>1.4.1.Final</arquillian.version>
     <junit-jupiter.version>5.5.1</junit-jupiter.version>
     <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
     <jandex-maven-plugin.version>1.0.6</jandex-maven-plugin.version>
     <capsule-maven-plugin.version>1.5.1</capsule-maven-plugin.version>
     <spotbugs-maven-plugin.version>3.1.12.2</spotbugs-maven-plugin.version>
     <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
-    <arquillian.version>1.4.1.Final</arquillian.version>
+
+    <bundle>bundle</bundle>
   </properties>
 
   <dependencyManagement>
@@ -229,8 +231,8 @@
           </execution>
         </executions>
         <configuration>
-          <executable>bundle</executable>
           <workingDirectory>${project.basedir}/docs</workingDirectory>
+          <executable>${bundle}</executable>
         </configuration>
       </plugin>
     </plugins>
@@ -248,6 +250,71 @@
 
   <profiles>
     <profile>
+      <id>gem-install</id>
+      <build>
+        <defaultGoal>exec:exec</defaultGoal>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <configuration>
+              <workingDirectory>${project.basedir}/docs</workingDirectory>
+              <executable>gem</executable>
+              <arguments>
+                <argument>install</argument>
+                <argument>--user-install</argument>
+                <argument>bundler</argument>
+                <argument>jekyll</argument>
+                <argument>just-the-docs</argument>
+              </arguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>bundle-update-jekyll</id>
+      <build>
+        <defaultGoal>exec:exec</defaultGoal>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <configuration>
+              <workingDirectory>${project.basedir}/docs</workingDirectory>
+              <executable>${bundle}</executable>
+              <arguments>
+                <argument>update</argument>
+                <argument>jekyll</argument>
+              </arguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>bundle-install</id>
+      <build>
+        <defaultGoal>exec:exec</defaultGoal>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <configuration>
+              <workingDirectory>${project.basedir}/docs</workingDirectory>
+              <executable>${bundle}</executable>
+              <arguments>
+                <argument>install</argument>
+              </arguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
       <id>jekyll-search</id>
       <build>
         <defaultGoal>exec:exec</defaultGoal>
@@ -256,6 +323,8 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <configuration>
+              <workingDirectory>${project.basedir}/docs</workingDirectory>
+              <executable>${bundle}</executable>
               <arguments>
                 <argument>exec</argument>
                 <argument>just-the-docs</argument>
@@ -277,6 +346,8 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <configuration>
+              <workingDirectory>${project.basedir}/docs</workingDirectory>
+              <executable>${bundle}</executable>
               <arguments>
                 <argument>exec</argument>
                 <argument>jekyll</argument>
@@ -297,6 +368,8 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
             <configuration>
+              <workingDirectory>${project.basedir}/docs</workingDirectory>
+              <executable>${bundle}</executable>
               <arguments>
                 <argument>exec</argument>
                 <argument>jekyll</argument>
