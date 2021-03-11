@@ -47,6 +47,26 @@ _fat jar_
 ./mvnw clean ; ./mvnw ; java -jar ./target/*-all.jar
 ```
 
+build _docs_ on my macOS:
+
+```bash
+brew reinstall libffi
+export LDFLAGS="-L/usr/local/opt/libffi/lib"
+export CPPFLAGS="-I/usr/local/opt/libffi/include"
+export PKG_CONFIG_PATH="/usr/local/opt/libffi/lib/pkgconfig"
+export PATH=$HOME/.local/share/gem/ruby/3.0.0/bin:$PATH
+gem install --user-install bundler jekyll just-the-docs
+
+./mvnw -Dbundle=`which bundle` exec:exec
+#./mvnw -Dbundle=`which bundle` -P jekyll-serve
+
+./mvnw -Dbundle=`which bundle` -P gem-install ; \
+  ./mvnw -Dbundle=`which bundle` -P bundle-update-jekyll ; \
+  ./mvnw -Dbundle=`which bundle` -P bundle-install ; \
+  ./mvnw -Dbundle=`which bundle` -P jekyll-search ; \
+  ./mvnw -Dbundle=`which bundle` -P jekyll-build
+```
+
 NOTE: _This project has been based on [GitHub: daggerok/main-starter (branch: maven-java)](https://github.com/daggerok/main-starter/tree/maven-java)_
 
 links:

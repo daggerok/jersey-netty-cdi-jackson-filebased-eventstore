@@ -10,7 +10,7 @@ env:
   - secure: hw6pdShvlvOYQE2N8qVUigZ3A06bj55LmOB786/B3zxWzwAa8mjfPo7jYD5eHTkiuUSpVKMhnr0MsKy//NJu+UIm2OqwZjhTMqYaiZx3a3mtontKgbcLsHJI7IyfQF3OqQVsvhoi+3yf8rfyysq4tnP+0RPlfqtYnrrNNolOBQRdaixQgACfzqYfkYM11EdInXZY6WZkfkIJHvmYhFJKB6D8LgEKdrY6q7W/KmPB9T37c2fcMxe/4aSaoHzFX3JPi6OLc3tT21Kv+XRQPYV7tp3XP67M6rGq2RKzXrKzLoYEjIU5d0pFbygmwE5YBdfn7j7C10rxAeFZ/UOXYJtCJW9ZojKkitwiDzUvo3Bu+Q3v0XDPE/hQ4RwC4zbmeT8DH2GnSSTNnAq+55ESbVXPGAo4FsW/PBlqBx4KlfOpjNbyBPeECGy1xYbOi547YqAYxkqVn3augp5OgZ/bNFRM80ib9k6lv81hFhBrC7Yp1b8GmO6XeUG0QZoOkKclO0DtzhM972uQiYL2Wb6i+Ll7cVeP6Oss+8VNENZTne2+weVVsl/tHFbjLI8mWaQmROqfVpekYl1UzJVx3iJQKSFiRTJlhXjnZYxabet+HPAggw0r40yWJUZRsRH3rFekBNmdjaVRQ+8nihdUOPS9bzCHYO/IUYuTrKDN7B3IJrFiVVU=
 
 language: java
-jdk: openjdk8
+jdk: openjdk11
 rvm: 2.6.4
 
 addons:
@@ -24,18 +24,10 @@ addons:
     - bash
     - curl
     - unzip
-    - python3-dev
-    - python3-pip
-    - python3-six
-    - python3-setuptools
+    - httpie
 
 install: true
 before_install:
-- export PATH=$HOME/.local/bin:$PATH
-- pip3 install --user $(whoami) --upgrade pip >/dev/null
-- pip install --user $(whoami) --upgrade httpie >/dev/null 2>&1
-- http --version --debug
-#
 - source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
 - stop_any 80 8001 8002 8080 5432
 
@@ -47,67 +39,7 @@ jobs:
   include:
 
   - stage: test
-    jdk: openjdk8
-    name: mvn
-    script:
-    - cd $TRAVIS_BUILD_DIR && ./mvnw -U >/dev/null
-    - java -jar $TRAVIS_BUILD_DIR/target/*-all.jar &
-    - wait_for 8080
-    - |
-      echo '[
-        {
-          "type":"CounterCreated",
-          "aggregateId": "00000000-0000-0000-0000-000000000000",
-          "counterName": "hello 1"
-        },
-        {
-          "type":"CounterIncremented",
-          "aggregateId": "00000000-0000-0000-0000-000000000000",
-          "by": "max",
-          "withValue": 2
-        },
-        {
-          "type":"CounterIncremented",
-          "aggregateId": "00000000-0000-0000-0000-000000000000",
-          "by": "max",
-          "withValue": 3
-        },
-        {
-          "type":"CounterIncremented",
-          "aggregateId": "00000000-0000-0000-0000-000000000000",
-          "by": "max"
-        },
-        {
-          "type":"CounterSuspended",
-          "aggregateId": "00000000-0000-0000-0000-000000000000",
-          "reason": "because!"
-        }
-      ]' | http post :8080/events/collection
-
-    - http :8080/events/00000000-0000-0000-0000-000000000001/collection Accept:application/json
-    - http :8080/events/00000000-0000-0000-0000-000000000000 Accept:application/json
-    - http :8080/events
-    - http delete :8080/events
-
-    - http :8080/counter
-    - http post :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterCreated counterName=hi
-    - http put :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterIncremented by=travis withValue=1
-    - http put :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterIncremented withValue=2
-    - http delete :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterSuspended reason="just because I can"
-    - http :8080/counter/00000000-0000-0000-0000-000000000000
-    - http :8080/counter
-    - http delete :8080/events
-    - http :8080/counter/00000000-0000-0000-0000-000000000000
-    - stop_any 80 8080
-
-  - stage: test
-    jdk: openjdk8
-    name: display-property-updates
-    script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
-
-  - stage: test
-    jdk: openjdk11
-    name: test jdk11
+    name: test
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw
     - java -jar $TRAVIS_BUILD_DIR/target/*-all.jar &
@@ -144,29 +76,34 @@ jobs:
       ]' | http post :8080/events/collection
 
     - http :8080/events/00000000-0000-0000-0000-000000000001/collection Accept:application/json
-    - http :8080/events/00000000-0000-0000-0000-000000000000 Accept:application/json
+    - http :8080/events/00000000-0000-0000-0000-000000000000            Accept:application/json
     - http :8080/events
     - http delete :8080/events
 
     - http :8080/counter
-    - http post :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterCreated counterName=hi
-    - http put :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterIncremented by=travis withValue=1
-    - http put :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterIncremented withValue=2
-    - http delete :8080/counter aggregateId=00000000-0000-0000-0000-000000000000 type=CounterSuspended reason="just because I can"
-    - http :8080/counter/00000000-0000-0000-0000-000000000000
-    - http :8080/counter
+    - http post   :8080/counter aggregateId=0-0-0-0-0 type=CounterCreated counterName=hi
+    - http put    :8080/counter aggregateId=0-0-0-0-0 type=CounterIncremented by=travis withValue=1
+    - http put    :8080/counter aggregateId=0-0-0-0-0 type=CounterIncremented withValue=2
+    - http delete :8080/counter aggregateId=0-0-0-0-0 type=CounterSuspended reason="just because I can"
+    - http get    :8080/counter/0-0-0-0-0
+    - http get    :8080/counter
     - http delete :8080/events
-    - http :8080/counter/00000000-0000-0000-0000-000000000000
+    - http get    :8080/counter/0-0-0-0-0
     - stop_any 80 8080
 
   - stage: test
     jdk: openjdk11
-    name: display-property-updates jdk11
+    name: display-property-updates
     script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
 
+  - stage: test
+    name: test documentation build
+    script:
+    - cd $TRAVIS_BUILD_DIR && ./mvnw exec:exec
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -Pjekyll-search
+    - cd $TRAVIS_BUILD_DIR && ./mvnw -Pjekyll-build
+
   - stage: deploy
-    jdk: openjdk11
-    rvm: 2.6.4
     name: GitHub release and GitHub pages deployment
     script: skip
     if: branch = "master" AND type NOT IN (pull_request)
@@ -188,7 +125,6 @@ jobs:
         condition: "$TRAVIS_PULL_REQUEST = false"
 
 cache:
-  pip: true
   bundler: true
   packages: true
   directories:
