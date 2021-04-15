@@ -2,24 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.daggerok</groupId>
   <artifactId>jersey-netty-cdi-jackson-file-eventstore</artifactId>
   <version>3.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
-
   <properties>
     <mainClass>daggerok.Main</mainClass>
-
     <java.version>11</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-
     <encoding>UTF-8</encoding>
     <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
-
     <vavr.version>0.10.2</vavr.version>
     <slf4j.version>1.7.28</slf4j.version>
     <jersey.version>2.29</jersey.version>
@@ -34,11 +29,9 @@
     <jandex-maven-plugin.version>1.0.6</jandex-maven-plugin.version>
     <capsule-maven-plugin.version>1.5.1</capsule-maven-plugin.version>
     <spotbugs-maven-plugin.version>3.1.12.2</spotbugs-maven-plugin.version>
-    <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
-
+    <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
     <bundle>bundle</bundle>
   </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -78,7 +71,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.jboss</groupId>
@@ -152,10 +144,8 @@
       <version>${assertj.version}</version>
     </dependency>
   </dependencies>
-
   <build>
     <defaultGoal>clean package</defaultGoal>
-
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -177,7 +167,6 @@
           </execution>
         </executions>
       </plugin>
-
       <!-- fat jar -->
       <plugin>
         <groupId>com.github.chrisdchristo</groupId>
@@ -196,7 +185,6 @@
           </execution>
         </executions>
       </plugin>
-
       <!-- In safe with SptBugs... -->
       <plugin>
         <groupId>com.github.spotbugs</groupId>
@@ -218,7 +206,6 @@
           </execution>
         </executions>
       </plugin>
-
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
@@ -237,7 +224,6 @@
       </plugin>
     </plugins>
   </build>
-
   <reporting>
     <plugins>
       <plugin>
@@ -247,7 +233,6 @@
       </plugin>
     </plugins>
   </reporting>
-
   <profiles>
     <profile>
       <id>gem-install</id>
@@ -272,7 +257,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>bundle-update-jekyll</id>
       <build>
@@ -293,7 +277,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>bundle-install</id>
       <build>
@@ -313,7 +296,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>jekyll-search</id>
       <build>
@@ -336,7 +318,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>jekyll-build</id>
       <build>
@@ -358,7 +339,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>jekyll-serve</id>
       <build>
@@ -381,5 +361,4 @@
       </build>
     </profile>
   </profiles>
-
 </project>
