@@ -1,0 +1,128 @@
+name: jersey-netty-cdi-jackson-file-eventstore
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+    inputs:
+      git-ref:
+        description: Git Ref (Optional)
+        required: false
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache jersey-netty-cdi-jackson-file-eventstore mvn
+        id: jersey-netty-cdi-jackson-file-eventstore-mvn
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.m2/repository
+            !~/.m2/repository/com/gituhb/daggerok
+          key: ${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Cleanup local system cache
+        run: sudo rm -rf ~/.m2/repository/com/github/daggerok
+      - run: ./mvnw -B dependency:resolve-plugins dependency:resolve
+      - run: ./mvnw
+  spotbugs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache jersey-netty-cdi-jackson-file-eventstore mvn
+        id: jersey-netty-cdi-jackson-file-eventstore-mvn
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.m2/repository
+            !~/.m2/repository/com/gituhb/daggerok
+          key: ${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Cleanup local system cache
+        run: sudo rm -rf ~/.m2/repository/com/github/daggerok
+      - run: ./mvnw -B dependency:resolve-plugins dependency:resolve
+      - run: ./mvnw spotbugs:check
+  display-property-updates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache jersey-netty-cdi-jackson-file-eventstore mvn
+        id: jersey-netty-cdi-jackson-file-eventstore-mvn
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.m2/repository
+            !~/.m2/repository/com/gituhb/daggerok
+          key: ${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Cleanup local system cache
+        run: sudo rm -rf ~/.m2/repository/com/github/daggerok
+      - run: ./mvnw -B dependency:resolve-plugins dependency:resolve
+      - run: ./mvnw versions:display-property-updates
+  javadoc:
+    if: github.event.inputs.git-ref != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache jersey-netty-cdi-jackson-file-eventstore mvn
+        id: jersey-netty-cdi-jackson-file-eventstore-mvn
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.m2/repository
+            !~/.m2/repository/com/gituhb/daggerok
+          key: ${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Cleanup local system cache
+        run: sudo rm -rf ~/.m2/repository/com/github/daggerok
+      - run: ./mvnw -B dependency:resolve-plugins dependency:resolve
+      - name: Build javadoc
+        run: ./mvnw javadoc:javadoc
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache jersey-netty-cdi-jackson-file-eventstore
+        id: jersey-netty-cdi-jackson-file-eventstore
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gems
+            ~/.bundle
+            ~/.m2/repository
+            !~/.m2/repository/com/gituhb/daggerok
+          key: ${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Cleanup local system cache
+        run: sudo rm -rf ~/.m2/repository/com/github/daggerok
+      - run: ./mvnw -B dependency:resolve-plugins dependency:resolve
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+      - run: ./mvnw -Dbundle=`which bundle` -P gem-install
+      - run: ./mvnw -Dbundle=`which bundle` -P bundle-update-jekyll
+      - run: ./mvnw -Dbundle=`which bundle` -P bundle-install
+      - run: ./mvnw -Dbundle=`which bundle` -P jekyll-search
+      - run: ./mvnw -Dbundle=`which bundle` -P jekyll-build
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.0
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: docs/_site # The folder the action should deploy.

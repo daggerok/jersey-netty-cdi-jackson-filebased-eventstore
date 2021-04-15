@@ -39,7 +39,7 @@ jobs:
   include:
 
   - stage: test
-    name: test
+    name: integration test
     script:
     - cd $TRAVIS_BUILD_DIR && ./mvnw
     - java -jar $TRAVIS_BUILD_DIR/target/*-all.jar &
@@ -91,41 +91,7 @@ jobs:
     - http get    :8080/counter/0-0-0-0-0
     - stop_any 80 8080
 
-  - stage: test
-    jdk: openjdk11
-    name: display-property-updates
-    script: cd $TRAVIS_BUILD_DIR && ./mvnw versions:display-property-updates -U
-
-  - stage: test
-    name: test documentation build
-    script:
-    - cd $TRAVIS_BUILD_DIR && ./mvnw exec:exec
-    - cd $TRAVIS_BUILD_DIR && ./mvnw -Pjekyll-search
-    - cd $TRAVIS_BUILD_DIR && ./mvnw -Pjekyll-build
-
-  - stage: deploy
-    name: GitHub release and GitHub pages deployment
-    script: skip
-    if: branch = "master" AND type NOT IN (pull_request)
-    before_deploy:
-    - if [ "$TRAVIS_PULL_REQUEST" != "false" ] || [ ".$TRAVIS_BRANCH" != ".master" ] ; then exit 0 ; fi
-    - set -e
-    - ./mvnw exec:exec
-    - ./mvnw -Pjekyll-search
-    - ./mvnw -Pjekyll-build
-    deploy:
-      provider: pages
-      skip-cleanup: true
-      github-token: "$GITHUB_TOKEN"
-      keep-history: true
-      local-dir: docs/_site
-      target_branch: gh-pages
-      on:
-        branch: master
-        condition: "$TRAVIS_PULL_REQUEST = false"
-
 cache:
-  bundler: true
   packages: true
   directories:
   - "~/.m2"
