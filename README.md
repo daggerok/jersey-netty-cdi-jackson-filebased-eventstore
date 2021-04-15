@@ -60,10 +60,10 @@ gem install --user-install bundler jekyll just-the-docs
 ./mvnw -Dbundle=`which bundle` exec:exec
 #./mvnw -Dbundle=`which bundle` -P jekyll-serve
 
-./mvnw -Dbundle=`which bundle` -P gem-install ; \
-  ./mvnw -Dbundle=`which bundle` -P bundle-update-jekyll ; \
-  ./mvnw -Dbundle=`which bundle` -P bundle-install ; \
-  ./mvnw -Dbundle=`which bundle` -P jekyll-search ; \
+./mvnw -Dbundle=`which bundle` -P gem-install && \
+  ./mvnw -Dbundle=`which bundle` -P bundle-update-jekyll && \
+  ./mvnw -Dbundle=`which bundle` -P bundle-install && \
+  ./mvnw -Dbundle=`which bundle` -P jekyll-search && \
   ./mvnw -Dbundle=`which bundle` -P jekyll-build
 ```
 
