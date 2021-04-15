@@ -18,13 +18,13 @@
     <vavr.version>0.10.2</vavr.version>
     <slf4j.version>1.7.28</slf4j.version>
     <jersey.version>2.29</jersey.version>
-    <log4j.version>2.12.1</log4j.version>
-    <lombok.version>1.18.8</lombok.version>
+    <log4j.version>2.14.1</log4j.version>
+    <lombok.version>1.18.20</lombok.version>
     <assertj.version>3.13.2</assertj.version>
     <jandex.version>2.1.1.Final</jandex.version>
     <jackson.version>2.10.0.pr2</jackson.version>
     <arquillian.version>1.4.1.Final</arquillian.version>
-    <junit-jupiter.version>5.5.1</junit-jupiter.version>
+    <junit-jupiter.version>5.8.0-M1</junit-jupiter.version>
     <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
     <jandex-maven-plugin.version>1.0.6</jandex-maven-plugin.version>
     <capsule-maven-plugin.version>1.5.1</capsule-maven-plugin.version>
